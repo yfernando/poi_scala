@@ -19,10 +19,9 @@ object LoginController extends Controller {
 
   def login = Action {
 
-    def googleAuth = new GoogleAuthService        // need to wire externally
-
     def authService =  new AuthenticationService
-    authService.setExternalAuthService(googleAuth)     // need to wire externally
+    def googleAuth = new GoogleAuthService        // TODO - need to wire externally
+    authService.setExternalAuthService(googleAuth)     // TODO - need to wire externally
     def authenticated = authService.authenticate("foo","bar"): Boolean
 
     if (authenticated) {

@@ -9,7 +9,9 @@ import services.{AuthenticationService, ExternalAuthService}
  * Time: 12:11
  * To change this template use File | Settings | File Templates.
  */
-class AuthenticationServiceTestScala extends Specification with Mockito { def is =
+class AuthenticationServiceTestScala extends Specification with Mockito {
+
+  def is =
     "Test Auth Service" ! {
       val mockExtAuthService = mock[ExternalAuthService]
       val authService = new AuthenticationService()
