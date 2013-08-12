@@ -14,8 +14,9 @@ import scala.math.Ordering.BooleanOrdering
 object LoginController extends Controller {
 
   def index = Action {
-    Ok(views.html.index())
+    Ok(content = views.html.login())
   }
+
 
   def login = Action {
 
@@ -25,10 +26,11 @@ object LoginController extends Controller {
     def authenticated = authService.authenticate("foo","bar"): Boolean
 
     if (authenticated) {
-      Ok(views.html.home())
+      Redirect(routes.HomePageController.showHomePage)
     } else {
-      Ok(views.html.index())
+      Ok(views.html.login())
     }
 
   }
+
 }

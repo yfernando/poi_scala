@@ -1,9 +1,24 @@
+@(categories: List[PoiCategory])
+@import helper._
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Home page</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 </head>
 <body>
-      Home page
+    <h2>Your current location is...</h2>
+    <h3>Select your POi from below categories</h3>
+
+
+     <div class="buttonHolder">
+            @categories.map  { category =>
+                @form(routes.PoiController.getPoiCollectionForCategory(category.name)) {
+                        <input type="submit" value=@category.name>
+                }
+            }
+     </div>
+
 </body>
 </html>

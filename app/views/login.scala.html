@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>This is POi</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+</head>
+<body>
+        <h2>Hello, this is POi</h2>
+        <img class="displayed-centre" src="@routes.Assets.at("images/POi.png")">
+        <br>
+
+        <form action="/login" method="POST">
+            <div class="textBoxHolder">
+                <p>
+                    <input id="username" type="text" placeholder="Username" autofocus required>
+                </p>
+                <p>
+                    <input id="password" type="password" placeholder="Password" required>
+                </p>
+            </div>
+            <div class="buttonHolder">
+                <p>
+                    <input type="submit" value="Log in" title="Search">
+                </p>
+            </div>
+        </form>
+
+</body>
+</html>
