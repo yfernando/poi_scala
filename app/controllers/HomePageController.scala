@@ -15,11 +15,13 @@ object HomePageController extends Controller {
   def showHomePage = Action {
 
     //create the Poi Category list
-    Ok(views.html.home(List(new PoiCategory(1, "Pub"),
-                            new PoiCategory(2, "Cafe"),
-                            new PoiCategory(3, "Restaurant"),
-                            new PoiCategory(4, "Bus_Stop"),
-                            new PoiCategory(5, "Underground"))))
+//    Ok(views.html.home(List(new PoiCategory(1, "Pub"),
+//                            new PoiCategory(2, "Cafe"),
+//                            new PoiCategory(3, "Restaurant"),
+//                            new PoiCategory(4, "Bus_Stop"),
+//                            new PoiCategory(5, "Underground"))))
+
+    Ok(views.html.home(PoiCategory.findAll()))
 
   }
 

@@ -1,5 +1,5 @@
 import org.junit.Test;
-import services.AuthenticationService;
+import services.AuthService;
 
 import static org.junit.Assert.assertFalse;
 
@@ -14,7 +14,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void checkCreds() {
-        AuthenticationService as = new AuthenticationService();
+        AuthService as = new AuthService();
         boolean result = as.authenticate(null,null);
         assertFalse(result);
 

@@ -8,9 +8,12 @@ GET     /                           controllers.LoginController.index
 # Login Page
 POST    /login                      controllers.LoginController.login
 
-# Home Page
+# Home Page (your account, current location, add current location and list of POI categories)
 GET     /home                       controllers.HomePageController.showHomePage
-POST    /poi                        controllers.PoiController.getPoiCategory(name: String)
+
+# List of POIs for a given category
+POST    /poi                        controllers.PoiController.getPoiCollectionForCategory(name: String)
+
 
 
 

@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc._
-import services.{GoogleAuthService, AuthenticationService}
+import services.{GoogleAuthService, AuthService}
 import scala.math.Ordering.BooleanOrdering
 
 /**
@@ -20,7 +20,7 @@ object LoginController extends Controller {
 
   def login = Action {
 
-    def authService =  new AuthenticationService
+    def authService =  new AuthService
     def googleAuth = new GoogleAuthService        // TODO - need to wire externally
     authService.setExternalAuthService(googleAuth)     // TODO - need to wire externally
     def authenticated = authService.authenticate("foo","bar"): Boolean
