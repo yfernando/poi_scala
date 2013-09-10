@@ -14,7 +14,7 @@ import scala.math.Ordering.BooleanOrdering
 object LoginController extends Controller {
 
   def index = Action {
-    Ok(content = views.html.login())
+    Ok(content = views.html.LoginController.login())
   }
 
 
@@ -26,9 +26,13 @@ object LoginController extends Controller {
     def authenticated = authService.authenticate("foo","bar"): Boolean
 
     if (authenticated) {
+      // set user object to session
+
       Redirect(routes.HomePageController.showHomePage)
     } else {
-      Ok(views.html.login())
+      // set "invalid username/password" error message
+
+      Ok(views.html.LoginController.login())
     }
 
   }
