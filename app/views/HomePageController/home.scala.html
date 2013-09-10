@@ -1,0 +1,79 @@
+@(categories: List[PoiCategory])
+@import helper._
+@main(title="Home Page"){
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.13&sensor=true&libraries=places&key=AIzaSyCxFCkUDgu8LbqCAg3I8_E5e7dAZFWltPg"></script>
+} {
+
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 main-content">
+            <h3>Your current location is: <span id="position"></span></h3>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Select your POi from below categories: </h4>
+                    <div class="buttonHolder">
+                        @categories.map  { category =>
+                            <h3 class="category-types">
+                                <a href="/poi-category/@category.name">
+                                    <span class="label label-default">@category.name</span>
+                                </a>
+                            </h3>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var pos=document.getElementById("position");
+        var geocoder;
+
+        function getLocation() {
+
+            if (navigator.geolocation) {
+                   navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else{
+                    pos.innerHTML="Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            geocoder.geocode( { 'latLng': latlng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    pos.innerHTML = results[0].formatted_address;
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+
+
+        }
+
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    x.innerHTML="User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.innerHTML="Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    x.innerHTML="The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.innerHTML="An unknown error occurred."
+                    break;
+            }
+        }
+
+        $(function(){
+            getLocation();
+        });
+
+    </script>
+}
