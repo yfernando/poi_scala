@@ -12,12 +12,21 @@ POST    /login                      controllers.LoginController.login
 GET     /home                       controllers.HomePageController.showHomePage
 
 # List of POIs for a given category
-POST    /poi                        controllers.PoiController.getPoiCollectionForCategory(name: String)
+GET    /poi-category/:name          controllers.PoiController.getPoiCollectionFromCategory(name: String)
 
+# Get the like/Dislike buttons
+GET    /like-button/:id             controllers.PoiController.getLikeButtons(id: String)
 
-
-
+# Vote
+POST   /vote/:id                    controllers.PoiController.vote(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /images/*file               controllers.Assets.at(path="/public", file)
+
+
+
+# Get the POI details from the backend
+GET    /poi/:id                     controllers.PoiController.getPoiDetails(id: String)
+
+GET    /poi-cattest                 controllers.PoiController.poiCatTest
