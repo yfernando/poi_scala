@@ -1,12 +1,7 @@
-img.displayed-centre {
-    display: block;
-    margin-left: auto;
-    margin-right: auto}
+.main-content{
+  /*background-color: #95B5F2;*/
+}
 
-h1 {text-align:center}
-h2 {text-align:center}
-h3 {text-align:center}
-
-.buttonHolder{ text-align: center; }
-
-.textBoxHolder{ text-align: center; }
+.category-types{
+  float: left;
+}
