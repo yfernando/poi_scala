@@ -1,0 +1,43 @@
+@(status: String)
+
+
+@status match {
+
+    case "NOT_VOTED" => {
+        <h3><span class="label label-default">You have not voted</span></h3>
+    }
+
+    case "LIKED" => {
+        <h3><span class="label label-success">You Liked it</span></h3>
+    }
+
+    case "NOT_LIKED" => {
+        <h2><span class="label label-danger">You did not like it</spam></h2>
+    }
+
+}
+
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default
+        @if(status == "LIKED"){
+        active
+        }
+    ">
+        <input type="radio" name="options" id="vote-yes"
+        @if(status == "LIKED"){
+            checked
+        }
+        > &#10003;
+    </label>
+    <label class="btn btn-default
+        @if(status == "NOT_LIKED"){
+    active
+    }
+    ">
+        <input type="radio" name="options" id="vote-no"
+        @if(status == "NOT_LIKED"){
+        checked
+        }
+        > &#x2715;
+    </label>
+</div>

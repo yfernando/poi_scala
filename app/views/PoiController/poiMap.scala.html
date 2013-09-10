@@ -1,0 +1,49 @@
+@(poiCategory: String)
+@main(title="Poi Category Map"){
+    <style>
+        html, body, #map-canvas {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+
+        .poi-detail-window {
+            text-align: center;
+            width: 20%;
+            height: 100%;
+            float: left;
+            border: 1px solid #000000;
+            display: none;
+            padding: 20px;
+        }
+
+        .poi-detail-window ul {
+            list-style: none;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.13&sensor=true&libraries=places&key=AIzaSyCxFCkUDgu8LbqCAg3I8_E5e7dAZFWltPg"></script>
+    <script>
+        var poiCategory= "@poiCategory";
+    </script>
+    <script src="@routes.Assets.at("javascripts/poi-searchnearby.js")"></script>
+
+} {
+<div class="row">
+    <div class="col-md-5 col-md-offset-4">
+        <h2>List of POis for "@poiCategory"</h2>
+    </div>
+</div>
+    <div class="poi-detail-window">
+        <div id="window-content">
+            <img id="picture" src="" alt=""/>
+            <h3 id="poi-name"></h3>
+            <h5 id="address"></h5>
+            <h5>Other Categories: </h5>
+            <ul id="types"></ul>
+            <div id="votes"></div>
+            <a class="btn btn-default" href="#" id="get-directions">Get Directions</a>
+        </div>
+    </div>
+    <div id="map-canvas"></div>
+}
