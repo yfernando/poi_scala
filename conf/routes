@@ -14,11 +14,12 @@ GET     /home                       controllers.HomePageController.showHomePage
 # List of POIs for a given category
 GET    /poi-category/:name          controllers.PoiController.getPoiCollectionFromCategory(name: String)
 
-# Get the like/Dislike buttons
-GET    /like-button/:id             controllers.PoiController.getLikeButtons(id: String)
 
-# Vote
-POST   /vote/:id                    controllers.PoiController.vote(id: String)
+# Get the like/Dislike buttons
+GET    /vote-buttons/:id            controllers.PoiController.getVoteButtons(id: String)
+
+# Vote (should be a POST)
+POST   /vote                       controllers.PoiController.vote(extPoiId: String, poiCatId: Long, userVote: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

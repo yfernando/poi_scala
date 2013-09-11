@@ -55,6 +55,7 @@ function runSearch(position) {
     // Current location based on longitude and latitude coordinates
     lat_long = position.coords.latitude + ',' + position.coords.longitude;
     var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    console.log(location)
 
     // Enable the visual refresh
     google.maps.visualRefresh = true;
@@ -69,8 +70,9 @@ function runSearch(position) {
     // Create the request for the near-by-search based on the Poi category selected
     var request = {
         location: location,
-        radius: 50000,
-        types: [poiCategory]
+        radius: 5000,
+        name: [poiCategory]
+
     };
 
     // initiate near by search
@@ -150,19 +152,42 @@ function display_place_data(place){
     }
 
     //display the voting buttons
-    $('#votes').load('/like-button/' + place.id, function(response, status, xhr) {
-      $('#vote-yes').click(function(){
-        $.post('/vote/'+place.id, {voted: 'liked'}, function(data){
-          $('#votes').html(data);
-        })
-      });
-
-      $('#vote-no').click(function(){
-          $.post('/vote/'+place.id, {voted: 'not_liked'}, function(data){
-            $('#votes').html(data);
-          })
-      });
+    $('#votes').load('/vote-buttons/' + place.id, function(response, status, xhr) {
+      console.log("loading vote buttons :"+ status);
+//      $('#vote-yes').click(function(){
+//        console.log("voting yes");
+//        $.post('/vote/'+place.id, {userVote: 'true'}, function(data){
+//          $('#votes').html(data);
+//        })
+//      });
+//
+//      $('#vote-no').click(function(){
+//        console.log("voting no");
+//          $.post('/vote/'+place.id, {userVote: 'false'}, function(data){
+//            $('#votes').html(data);
+//          })
+//      });
+        $("input[id='vote-yes']",$('#votes')).change(
+        function(e)
+        {
+            console.log("and we have voting for yes");
+            $.post('/vote', {extPoiId: place.id, userVote: 'true', poiCatId: poiCategory}, function(data){
+              //$('#votes').html(data);
+              $('#vote-status').html("You Liked it")
+            })
+        });
+        $("input[id='vote-no']",$('#votes')).change(
+        function(e)
+        {
+            console.log("and we have voting for no");
+              $.post('/vote', {extPoiId: place.id, userVote: 'false', poiCatId: poiCategory}, function(data){
+                //$('#votes').html(data);
+                $('#vote-status').html("You Did Not Liked")
+              })
+        });
+      console.log("finished loading vote buttons");
     });
+
 
     // get direction button
     var origin = lat_long;

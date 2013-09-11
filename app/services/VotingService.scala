@@ -1,7 +1,7 @@
 package services
 
 import models.Vote
-import java.util.Random
+import java.util.Date
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,19 +25,19 @@ class VotingService {
   def getVoteStatus(userId: Long, extPoiId: String):  String = {
 
     if (userId == 0  || extPoiId.isEmpty) {
-        Constants.STATUS_NOT_VOTED
+      Constants.STATUS_NOT_VOTED
     }
 
     val voteObj = Vote.findLastVote(userId, extPoiId)
 
     voteObj match {
-        case None => Constants.STATUS_NOT_VOTED
-        case Some(vote) => {
-            if (vote.voted)
-                Constants.STATUS_LIKED
-            else
-                Constants.STATUS_NOT_LIKED
-        }
+      case None => Constants.STATUS_NOT_VOTED
+      case Some(vote) => {
+        if (vote.voted)
+            Constants.STATUS_LIKED
+        else
+            Constants.STATUS_NOT_LIKED
+      }
     }
 
 //    Random randomGenerator = new Random();
@@ -48,6 +48,22 @@ class VotingService {
 //      case 2: return NOT_LIKED;
 //      default: return "";
 //    }
+  }
+
+
+  def vote(userId: Long, extPoiId: String, poiCatId: Long, userVote: String) {
+
+    if (userId == 0 || extPoiId.isEmpty || poiCatId == 0 || userVote.isEmpty) {
+      println("invalid vote input")
+      return
+    }
+
+    val voteObj = Vote.findLastVote(userId,extPoiId)
+    voteObj match {
+      case None => Vote.createVote(userId, poiCatId, extPoiId, userVote)
+      case Some(vote) => Vote.updateVote(userId, poiCatId, extPoiId, userVote)
+    }
+
   }
 
 }

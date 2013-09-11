@@ -27,28 +27,44 @@ object PoiController extends Controller {
   }
 
   /**
-   * Display the like/dislike buttons with the relavant state based on
-   * previous selections.
+   * Display the like/dislike buttons with the relavent state based on
+   * previous selections. A state can be liked, not liked or not voted.
+   *
    * @param poiId - selected poi
    * @return - view html that display the voting buttons
    */
-  def getLikeButtons (poiId: String) = Action {
+  def getVoteButtons (poiId: String) = Action {
 
-    def userId = 123     // get from session
+    val userId = 1    // get from session
 
-    //check if this poi id was already voted by the user
-    def votingService = new VotingService()
-    def status = votingService.hasVoted(userId, poiId)
+    //get the last vote status for this poi by the user
+    val votingService = new VotingService()
+    val currentStatus = votingService.getVoteStatus(userId, poiId)
 
     // display the Buttons
-    Ok(content = views.html.PoiController.likeButtons(status))
+    Ok(content = views.html.PoiController.likeButtons(currentStatus))
   }
 
+  /**
+   * Handles a user vote for the poi and reload the vote buttons
+   *
+   * @param poiId - selected poi
+   * @return - view html that display the voting buttons
+   */
+  def vote(extPoiId: String, poiCatId: Long, userVote: String) = Action {
 
-  def vote(id: String) = Action {
+    println("inside vote method")
 
-    //TODO: Update the votes for the id and with the value form the request voted param
-    Redirect(routes.PoiController.getLikeButtons(id))
+    val ext_PoiId = extPoiId
+    val poi_CatId = poiCatId
+    val user_Vote = userVote
+    val userId = 1          // todo: get from session
+
+    val votingService = new VotingService()
+    votingService.vote(userId, ext_PoiId, poi_CatId, user_Vote)
+
+    //Redirect(routes.PoiController.getVoteButtons(poiId))
+    Ok//(content = views.html.PoiController.likeButtons(userVote))
   }
 
   def poiCatTest() = Action {

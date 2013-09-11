@@ -37,7 +37,7 @@ object PoiCategory {
           SQL(
             """
               |select * from poi_categories
-            """"
+            """.stripMargin
           ).as(PoiCategory.simple *)
       }
   }
@@ -54,7 +54,7 @@ object PoiCategory {
             """
               |insert into poi_categories (name, image_path)
               |values ({name}, {image_path})
-            """
+            """.stripMargin
           ).on(
               'name -> poiCategory.name,
               'image_path -> poiCategory.imagePath

@@ -22,7 +22,7 @@ create table votes (
     user_id                     bigint not null,
     external_poi_id             varchar(255) not null,
     poi_cat_id                  bigint not null,
-    vote                        boolean,
+    voted                       boolean,
     date_voted                  timestamp not null,
     foreign key(poi_cat_id)     references poi_categories(id),
     foreign key(user_id)        references users(id)
