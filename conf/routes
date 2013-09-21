@@ -19,7 +19,7 @@ GET    /poi-category/:name          controllers.PoiController.getPoiCollectionFr
 GET    /vote-buttons/:id            controllers.PoiController.getVoteButtons(id: String)
 
 # Vote (should be a POST)
-POST   /vote                       controllers.PoiController.vote(extPoiId: String, poiCatId: Long, userVote: String)
+POST   /vote                        controllers.PoiController.vote(extPoiId: String, poiCatId: Long, userVote: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

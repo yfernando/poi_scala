@@ -12,11 +12,13 @@ import models.PoiCategory
  */
 object HomePageController extends Controller {
 
-  def showHomePage = Action {
+  def showHomePage = Action { implicit request =>
 
-    //create the PoiController Category list
+    //create the PoiController Category liSecuredst
 
     //Check if user object in session
+
+    println("username is - " + request.session.get("email"))
 
     Ok(views.html.HomePageController.home(PoiCategory.findAll()))
 
