@@ -4,6 +4,7 @@ import play.api.mvc._
 import java.util
 import models.PoiCategory
 import services.VotingService
+import controllers.LoginController.Secured
 
 
 /**
@@ -13,7 +14,7 @@ import services.VotingService
  * Time: 05:36
  * To change this template use File | Settings | File Templates.
  */
-object PoiController extends Controller {
+object PoiController extends Controller with Secured {
 
 
   /**
@@ -21,7 +22,7 @@ object PoiController extends Controller {
    * @param name - the selected poi category
    * @return - view html that creates the google map
    */
-  def getPoiCollectionFromCategory (name: String) =  Action {
+  def getPoiCollectionFromCategory (name: String) =  withAuth { _ => _ =>
     //get POi collection
     Ok(content = views.html.PoiController.poiMap(name))
   }
@@ -33,7 +34,7 @@ object PoiController extends Controller {
    * @param poiId - selected poi
    * @return - view html that display the voting buttons
    */
-  def getVoteButtons (poiId: String) = Action {
+  def getVoteButtons (poiId: String) = withAuth { _ => _ =>
 
     val userId = 1    // get from session
 
@@ -51,24 +52,21 @@ object PoiController extends Controller {
    * @param poiId - selected poi
    * @return - view html that display the voting buttons
    */
-  def vote(extPoiId: String, poiCatId: Long, userVote: String) = Action {
+  def vote(extPoiId: String, poiCatId: Long, userVote: String) = withAuth { _ => _ =>
 
     println("inside vote method")
-
-    val ext_PoiId = extPoiId
-    val poi_CatId = poiCatId
-    val user_Vote = userVote
     val userId = 1          // todo: get from session
 
     val votingService = new VotingService()
-    votingService.vote(userId, ext_PoiId, poi_CatId, user_Vote)
+    votingService.vote(userId, extPoiId, poiCatId, userVote)
 
-    //Redirect(routes.PoiController.getVoteButtons(poiId))
-    Ok//(content = views.html.PoiController.likeButtons(userVote))
+    //Redirect(routes.PoiController.getVoteButtons(extPoiId))
+    Ok
+    //Ok(content = views.html.PoiController.likeButtons(userVote))
   }
 
   def poiCatTest() = Action {
-    Ok(content = views.html.test());
+    Ok(content = views.html.test())
   }
 
   /**

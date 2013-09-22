@@ -56,8 +56,6 @@ object LoginController extends Controller {
 
   trait Secured {
 
-    trait Secured {
-
       /**
        * Retrieve the connected user email.
        */
@@ -73,9 +71,11 @@ object LoginController extends Controller {
       /**
        * Action for authenticated users.
        */
-      def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
-        Action(request => f(user)(request))
+    def withAuth(f: => String => Request[AnyContent] => Result) = {
+        Security.Authenticated(username, onUnauthorized) { user =>
+          Action(request => f(user)(request))
+        }
       }
-    }
+
   }
 }

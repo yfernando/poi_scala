@@ -2,6 +2,8 @@ package controllers
 
 import play.api.mvc._
 import models.PoiCategory
+import controllers.LoginController.Secured
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,18 +12,12 @@ import models.PoiCategory
  * Time: 01:10
  * To change this template use File | Settings | File Templates.
  */
-object HomePageController extends Controller {
+object HomePageController extends Controller with Secured {
 
-  def showHomePage = Action { implicit request =>
-
-    //create the PoiController Category liSecuredst
-
-    //Check if user object in session
-
-    println("username is - " + request.session.get("email"))
-
+  def showHomePage = withAuth { _ => _ =>
+    //println("username is - " + request.session.get("email"))
     Ok(views.html.HomePageController.home(PoiCategory.findAll()))
-
   }
+
 
 }
