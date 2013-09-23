@@ -45,6 +45,19 @@ object User {
   }
 
   /**
+   * Retrieve a User from email.
+   */
+  def findIDByEmail(email: String): Long = {
+    DB.withConnection("poi") { implicit connection =>
+      SQL(
+        "select id from users where email = {email}"
+      ).on(
+        'email -> email
+      ).as(scalar[Long].single)
+    }
+  }
+
+  /**
    * Retrieve all users.
    */
   def findAll: Seq[User] = {

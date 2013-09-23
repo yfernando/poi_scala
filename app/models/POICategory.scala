@@ -43,6 +43,19 @@ object PoiCategory {
   }
 
   /**
+   * Retrieve a Category ID from its name.
+   */
+  def findIDByName(name: String): Long = {
+    DB.withConnection("poi") { implicit connection =>
+      SQL(
+        "select id from poi_categories where name = {name}"
+      ).on(
+        'name -> name
+      ).as(scalar[Long].single)
+    }
+  }
+
+  /**
    * Create a POi category
    *
    * @param poiCategory  new poi category object

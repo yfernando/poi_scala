@@ -2,9 +2,11 @@ package controllers
 
 import play.api.mvc._
 import java.util
-import models.PoiCategory
+import models.{PoiCategory, User}
 import services.VotingService
 import controllers.LoginController.Secured
+import views.html.helper.form
+import play.data.Form
 
 
 /**
@@ -34,13 +36,15 @@ object PoiController extends Controller with Secured {
    * @param poiId - selected poi
    * @return - view html that display the voting buttons
    */
-  def getVoteButtons (poiId: String) = withAuth { _ => _ =>
+  def getVoteButtons (poiId: String) = withAuth { _ => implicit request =>
 
-    val userId = 1    // get from session
+    println("inside vote getVoteButtons")
+    val userEmail = request.session.get("email")
+    val userIdLong = User.findIDByEmail(userEmail.get)
 
     //get the last vote status for this poi by the user
     val votingService = new VotingService()
-    val currentStatus = votingService.getVoteStatus(userId, poiId)
+    val currentStatus = votingService.getVoteStatus(userIdLong, poiId)
 
     // display the Buttons
     Ok(content = views.html.PoiController.likeButtons(currentStatus))
@@ -49,21 +53,36 @@ object PoiController extends Controller with Secured {
   /**
    * Handles a user vote for the poi and reload the vote buttons
    *
-   * @param poiId - selected poi
    * @return - view html that display the voting buttons
    */
-  def vote(extPoiId: String, poiCatId: Long, userVote: String) = withAuth { _ => _ =>
+  def vote = withAuth { _ => implicit request =>
 
     println("inside vote method")
-    val userId = 1          // todo: get from session
+    val userEmail = request.session.get("email")
+    val extPoiId = request.body.asFormUrlEncoded.get("extPoiId")
+    val poiCatName = request.body.asFormUrlEncoded.get("poiCatName")
+    val userVote = request.body.asFormUrlEncoded.get("userVote")
+    println("## the request params are - " + userEmail +","+ extPoiId +","+ poiCatName +","+ userVote )
+
+    //cast the parameters to write to the database
+    val userIdLong = User.findIDByEmail(userEmail.get)
+    val catIdLong = PoiCategory.findIDByName(poiCatName.head)
+    val extPoiIdString = extPoiId.head
+    val userVoteString = userVote.head
+    println("## the casted params are - " + userIdLong +","+ extPoiIdString +","+ catIdLong +","+ userVoteString )
 
     val votingService = new VotingService()
-    votingService.vote(userId, extPoiId, poiCatId, userVote)
+    votingService.vote(userIdLong, extPoiIdString , catIdLong, userVoteString)
 
-    //Redirect(routes.PoiController.getVoteButtons(extPoiId))
-    Ok
-    //Ok(content = views.html.PoiController.likeButtons(userVote))
+    //Ok
+    //Ok((views.html.PoiController.likeButtons(extPoiIdString)))
+    Redirect(routes.PoiController.getVoteButtons(extPoiIdString))
+
   }
+
+
+
+
 
   def poiCatTest() = Action {
     Ok(content = views.html.test())
