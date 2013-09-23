@@ -10,41 +10,49 @@
 
 </head>
 <body>
-    <div class="container">
-        <h2></h2>
-        <img src="@routes.Assets.at("images/POi.png")">
-        <br>
-        <h2></h2>
-        <!--<form action="/login" method="POST">-->
-        @helper.form(routes.LoginController.login) {
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+                <img src="@routes.Assets.at("images/POi.png")">
+        </div>
+    </div>
 
-            <div class="textBoxHolder">
-                <p>
-                    <input type="email" name="email" placeholder="Email" id="email" value="@form("email").value" autofocus required>
-                </p>
-                <p>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                </p>
-            </div>
+    <div class="row">
+        <div class="span4 offset4 well">
+            <legend>Please Sign In</legend>
+            <!--<form action="/login" method="POST">-->
+            @helper.form(routes.LoginController.login) {
 
-            @form.globalError.map { error =>
-
-                <div class="has-error">
-                    <p class="control-label">
-                        @error.message
+                <div class="textBoxHolder">
+                    <p>
+                        <input type="email" name="email" placeholder="Email" id="email" value="@form("email").value" autofocus required>
+                    </p>
+                    <p>
+                        <input type="password" name="password" id="password" placeholder="Password" required>
                     </p>
                 </div>
+
+                @form.globalError.map { error =>
+
+                    <div class="has-error">
+                        <p class="control-label">
+                            @error.message
+                        </p>
+                    </div>
+                }
+
+                <div class="buttonHolder">
+                    <p>
+                        <input type="submit" value="Log in" title="Search">
+                    </p>
+                </div>
+
             }
-
-            <div class="buttonHolder">
-                <p>
-                    <input type="submit" value="Log in" title="Search">
-                </p>
-            </div>
-
-        }
-        <!--</form>-->
+            <!--</form>-->
+        </div>
     </div>
+</div>
+
 </body>
 </html>
