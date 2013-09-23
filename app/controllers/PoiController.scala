@@ -50,6 +50,10 @@ object PoiController extends Controller with Secured {
     Ok(content = views.html.PoiController.likeButtons(currentStatus))
   }
 
+  def getStats(poiId: String) = withAuth { _ => implicit request =>
+    Ok(content = views.html.PoiController.stats())
+  }
+
   /**
    * Handles a user vote for the poi and reload the vote buttons
    *

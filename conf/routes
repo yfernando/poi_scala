@@ -17,6 +17,7 @@ GET    /poi-category/:name          controllers.PoiController.getPoiCollectionFr
 
 # Get the like/Dislike buttons
 GET    /vote-buttons/:id            controllers.PoiController.getVoteButtons(id: String)
+GET    /load-stats/:id              controllers.PoiController.getStats(id: String)
 
 # Vote (should be a POST)
 #POST   /vote                        controllers.PoiController.vote(extPoiId: String, poiCatId: Long, userVote: String)
